@@ -1,0 +1,16 @@
+<pre class='metadata'>
+Title: A Well-Known URL for Changing Passwords
+Shortname: change-password-url
+Level: 1
+Status: CG-DRAFT
+Group: WICG
+Repository: WICG/change-password-url
+URL: http://example.com/url-this-spec-will-live-at
+Editor: Theresa O'Connor, Apple Inc. https://apple.com/, hober@apple.com
+Abstract: A short description of your spec, one or two sentences.
+</pre>
+
+Introduction {#intro}
+=====================
+
+See https://github.com/tabatkins/bikeshed to get started.
