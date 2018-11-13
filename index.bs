@@ -5,7 +5,7 @@ Level: 1
 Status: CG-DRAFT
 Group: WICG
 Repository: WICG/change-password-url
-URL: https://wicg.github.io/change-password-url/
+URL: https://wicg.github.io/change-password-url/index.html
 Editor: Theresa O'Connor, w3cid 40614, Apple Inc. https://apple.com/, hober@apple.com
 Abstract: This specification defines a well-known URL that sites can use
  to make their change password forms discoverable by tools. This simple

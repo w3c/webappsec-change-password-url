@@ -5,7 +5,7 @@ password on `example.com`, basically all the password manager can do is
 load `example.com` in a browser tab and hope the user can figure out how
 to update their password themselves.
 
-The goal of [this spec](index.html) is to do the simplest
+The goal of [this spec](https://wicg.github.io/change-password-url/index.html) is to do the simplest
 possible thing to improve this situation.
 
 ### Proposal

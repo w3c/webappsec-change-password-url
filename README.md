@@ -1,6 +1,6 @@
 # A Well-Known URL for Changing Passwords
 
-This [specification](index.html) defines the <code>/.well-known/change-password</code>
+This [specification](https://wicg.github.io/change-password-url/index.html) defines the <code>/.well-known/change-password</code>
 [well-known resource](https://tools.ietf.org/html/rfc5785).
 
 For more context, please read the [explainer](explainer.md).
