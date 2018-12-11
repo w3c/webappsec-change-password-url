@@ -54,6 +54,8 @@ Sites currently lack a way to programmatically advertise where a user <span clas
 
 <h2 id="infra">Infrastructure</h2>
 
+This specification depends on the Infra Standard. [[!INFRA]]
+
 This specification uses terminology from the
 Fetch,
 HTML,
@@ -68,12 +70,22 @@ Only [=origins=] whose [=scheme=] is <code>"https"</code> may have a [=change pa
 
 Given an |origin|, clients <dfn export>generate a change password url</dfn> by running these steps:
 
-<ol>
-  <li>Let |url| be a new {{URL}} with
-  {{url}} <code>"/.well-known/change-password"</code> and
-  {{base}} |origin|.
-  <li>Return |url|.
-</ol>
+1.  If |origin| is not a [=potentially trustworthy origin=], return failure.
+
+2.  Assert: |origin| is a [=tuple origin=].
+
+3.  Let |url| be a new {{URL}} with values set as follows:
+
+    :   [=url/scheme=]
+    ::  |origin|'s [=origin/scheme=]
+    :   [=url/host=]
+    ::  |origin|'s [=origin/host=]
+    :   [=url/port=]
+    ::  |origin|'s [=origin/port=]
+    :   [=url/path=]
+    ::  « ".well-known", "change-password" ».
+
+4.  Return |url|.
 
 <p class=example>The change password url for origin <code>"https://example.com/"</code> is <code>"https://example.com/.well-known/change-password"</code>.
 
