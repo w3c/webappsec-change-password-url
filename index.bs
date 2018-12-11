@@ -91,7 +91,7 @@ Clients must handle such redirects when requesting a [=change password url=].
 
 If necessary, servers may respond with an HTML document containing an <{meta/http-equiv}> pragma directive in the [=refresh state=]. [[!HTML]] Clients should handle such redirects when requesting a [=change password url=].
 
-Servers must not locate the actual change password page at the [=change password url=], per <a href="https://tools.ietf.org/html/rfc5785#section-1.1">RFC5785 §1.1 Appropriate Use of Well-Known URIs</a>. Clients must handle [=ok status=] responses when requesting a [=change password url=].
+Servers must not locate the actual change password page at the [=change password url=], per [[WELL-KNOWN#section-1.1|RFC5785 §1.1 Appropriate Use of Well-Known URIs]]. Clients must handle [=ok status=] responses when requesting a [=change password url=].
 
 <h2 id="iana">IANA considerations</h2>
 
