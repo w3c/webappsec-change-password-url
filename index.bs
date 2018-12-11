@@ -35,7 +35,6 @@ text:Location;      type:http-header; spec:rfc7231
 text:origin;        type:dfn;         spec:html; for: url
 text:request;       type:dfn;         spec:fetch; for:/
 text:response;      type:dfn;         spec:fetch; for:/
-text:scheme;        type:dfn;         spec:url
 text:URL;           type:interface;   spec:url
 text:url;           type:argument;    spec:url
 </pre>
