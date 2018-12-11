@@ -115,9 +115,12 @@ This registration will be submitted to the IESG for review, approval, and regist
 <h2 id="acknowedgements" class="no-num">Acknowledgements</h2>
 
 Thanks to
+Anne van Kesteren,
+Cl1608Ho,
 Dan Bernstein,
 David Singer,
 Dean Jackson,
+Florian Rivoal,
 John Wilander,
 Maciej Stachowiak,
 Mark Nottingham,
