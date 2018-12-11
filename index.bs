@@ -66,8 +66,6 @@ URL standards. [[!FETCH]] [[!HTML]] [[!HTTP-SEMANTICS]] [[!URL]]
 
 A <dfn export>change password url</dfn> of an [=origin=] is a URL that points to a resource that clients can use to discover where a user should go to update their password on [=origin=].
 
-Only [=origins=] whose [=scheme=] is <code>"https"</code> may have a [=change password url=].
-
 Given an |origin|, clients <dfn export>generate a change password url</dfn> by running these steps:
 
 1.  If |origin| is not a [=potentially trustworthy origin=], return failure.
