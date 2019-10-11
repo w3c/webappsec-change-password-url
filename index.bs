@@ -92,8 +92,11 @@ Given an |origin|, clients <dfn export>generate a change password url</dfn> by r
 
 <p class=example>The change password url for origin <code>"https://example.com/"</code> is <code>"https://example.com/.well-known/change-password"</code>.
 
-Servers should redirect HTTP [=requests=] for an [=origin's=] [=change password url=] to the actual page on which users may change their password by returning a [=response=] with a [=redirect status=] and [=Location=] header. [[!FETCH]] [[!HTTP-SEMANTICS]]
+Servers should redirect HTTP [=requests=] for an [=origin's=] [=change password url=] to the actual page on which users may change their password by returning a [=response=] with a [=redirect status=] of 302, 303, or 307, and a [=Location=] header. [[!FETCH]] [[!HTTP-SEMANTICS]]
 Clients must handle such redirects when requesting a [=change password url=].
+
+Note: The above paragraph restricts servers to using temporary redirect codes.
+See <a href="https://github.com/WICG/change-password-url/issues/13">Issue 13</a>.
 
 If necessary, servers may respond with an HTML document containing an <{meta/http-equiv}> pragma directive in the [=refresh state=]. [[!HTML]] Clients should handle such redirects when requesting a [=change password url=].
 
