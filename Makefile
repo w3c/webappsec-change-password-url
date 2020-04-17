@@ -1,18 +1,25 @@
-# Dependencies and how to fulfill them
-#   * bikeshed <https://tabatkins.github.io/bikeshed/#installing>
-#   * markdown2 (pip install markdown2)
+# This Makefile assumes you have Bikeshed and DocToc installed.
+#
+# Bikeshed can be installed with pip:
+#
+#     pip3 install bikeshed && bikeshed update
+#
+# DocToc can be installed via NPM:
+#
+#     npm install -g doctoc
 
-all: docs spec
+.PHONY: all clean spec update-explainer-toc
+.SUFFIXES: .bs .html
 
-clean:
-	@rm -f *~ *.html
+all: update-explainer-toc spec
 
-docs: $(patsubst %.md,%.html,$(wildcard *.md))
-spec: $(patsubst %.bs,%.html,$(wildcard *.bs))
+update-explainer-toc:
+	doctoc README.md --title "## Table of Contents" > /dev/null
 
-%.html: %.bs
+spec: index.html
+
+.bs.html:
 	bikeshed spec $< $@
 
-%.html: %.md boilerplate.html.in
-	@cat boilerplate.html.in > $@
-	markdown2 $< >> $@
+clean:
+	rm -f index.html *~
