@@ -14,7 +14,7 @@
 
 Currently, if the user of a password manager would like to change their password on `example.com`, basically all the password manager can do is load `example.com` in a browser tab and hope the user can figure out how to update their password themselves.
 
-The goal of this [specification](https://wicg.github.io/change-password-url/)is to do the simplest possible thing to improve this situation, by defining the <code>/.well-known/change-password</code> [well-known resource](https://tools.ietf.org/html/rfc5785).
+The goal of this [specification](https://wicg.github.io/change-password-url/) is to do the simplest possible thing to improve this situation, by defining the <code>/.well-known/change-password</code> [well-known resource](https://tools.ietf.org/html/rfc5785).
 
 ## Proposal
 
