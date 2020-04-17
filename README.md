@@ -1,11 +1,42 @@
 # A Well-Known URL for Changing Passwords
 
-This [specification](https://wicg.github.io/change-password-url/index.html) defines the <code>/.well-known/change-password</code>
-[well-known resource](https://tools.ietf.org/html/rfc5785).
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
 
-For more context, please read the [explainer](explainer.md).
+- [Proposal](#proposal)
+- [Frequently Asked Questions](#frequently-asked-questions)
+  - [Why not allow sites to override this location with an HTTP Link header or an HTML `link` element?](#why-not-allow-sites-to-override-this-location-with-an-http-link-header-or-an-html-link-element)
+  - [Why not serve a JSON resource with links to other account management functions?](#why-not-serve-a-json-resource-with-links-to-other-account-management-functions)
+  - [What tools have implemented this feature?](#what-tools-have-implemented-this-feature)
 
-All [participation](CONTRIBUTING.md) is governed by the
-[W3C Community Group Participation Policies](https://www.w3.org/community/about/agreements/#policies), the
-[Web Platform Incubator Community Group Charter](https://wicg.github.io/admin/charter.html), and the
-[W3C Code of Ethics and Professional Conduct](https://www.w3.org/Consortium/cepc/).
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+Currently, if the user of a password manager would like to change their password on `example.com`, basically all the password manager can do is load `example.com` in a browser tab and hope the user can figure out how to update their password themselves.
+
+The goal of this [specification](https://wicg.github.io/change-password-url/)is to do the simplest possible thing to improve this situation, by defining the <code>/.well-known/change-password</code> [well-known resource](https://tools.ietf.org/html/rfc5785).
+
+## Proposal
+
+`example.com` provides a `/.well-known/change-password` resource which redirects to their change password form, wherever it happens to already be.
+
+Password managers check for the existence of `/.well-known/change-password` on `https://example.com`.
+
+If it's there (the response code is `2xx` or `3xx`), the password manager can cause the user's browser to navigate there when the user indicates they'd like to change their password.
+
+That's it, really. It's a pretty simple idea.
+
+## Frequently Asked Questions
+
+### Why not allow sites to override this location with an HTTP Link header or an HTML `link` element?
+
+Implementation complexity. (This would require keeping site-specific state client-side, verifying & invalidating said state periodically, etc.)
+
+### Why not serve a JSON resource with links to other account management functions?
+
+Specification complexity. If we determine we need other account management well-known resources in the future, we can specify them then.
+
+### What tools have implemented this feature?
+
+* iCloud Keychain on iOS 12
+* Safari 12
