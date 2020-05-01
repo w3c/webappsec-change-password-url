@@ -40,3 +40,7 @@ Specification complexity. If we determine we need other account management well-
 
 * iCloud Keychain on iOS 12
 * Safari 12
+
+### What about servers whose HTTP response codes are unreliable?
+
+Sometimes, HTTP servers are configured to respond `200 OK` for resources that really aren't there. The [Detecting the reliability of HTTP status codes](https://wicg.github.io/change-password-url/response-code-reliability.html) draft attempts to address this problem.
