@@ -1,7 +1,7 @@
 <!doctype html><html lang="en">
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-  <title>A Well-Known URL for Changing Passwords</title>
+  <title>Detecting the reliability of HTTP status codes</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 <style data-fill-with="stylesheet">/******************************************************************************
  *                   Style sheet for the W3C specifications                   *
@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version a33f8714, updated Thu Apr 23 16:21:43 2020 -0700" name="generator">
-  <link href="https://wicg.github.io/change-password-url/" rel="canonical">
+  <link href="https://wicg.github.io/change-password-url/response-code-reliability.html" rel="canonical">
   <meta content="88c900f02f3234419996255730a14952a3aa3d98" name="document-revision">
 <style>/* style-autolinks */
 
@@ -1412,32 +1412,27 @@ dfn > a.self-link::before      { content: "#"; }</style>
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"></p>
-   <h1 class="p-name no-ref" id="title">A Well-Known URL for Changing Passwords</h1>
+   <h1 class="p-name no-ref" id="title">Detecting the reliability of HTTP status codes</h1>
    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-05-01">1 May 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
-     <dd><a class="u-url" href="https://wicg.github.io/change-password-url/">https://wicg.github.io/change-password-url/</a>
+     <dd><a class="u-url" href="https://wicg.github.io/change-password-url/response-code-reliability.html">https://wicg.github.io/change-password-url/response-code-reliability.html</a>
      <dt>Issue Tracking:
      <dd><a href="https://github.com/WICG/change-password-url/issues/">GitHub</a>
-     <dd><a href="#issues-index">Inline In Spec</a>
      <dt class="editor">Editors:
      <dd class="editor p-author h-card vcard" data-editor-id="103933"><a class="p-name fn u-email email" href="mailto:rmondello@apple.com">Ricky Mondello</a> (<a class="p-org org" href="https://apple.com/">Apple Inc.</a>)
      <dd class="editor p-author h-card vcard" data-editor-id="40614"><a class="p-name fn u-email email" href="mailto:hober@apple.com">Theresa O'Connor</a> (<a class="p-org org" href="https://apple.com/">Apple Inc.</a>)
     </dl>
    </div>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2020 the Contributors to the A Well-Known URL for Changing Passwords Specification, published by the <a href="https://www.w3.org/community/wicg/">Web Platform Incubator Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
+   <p class="copyright" data-fill-with="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2020 the Contributors to the Detecting the reliability of HTTP status codes Specification, published by the <a href="https://www.w3.org/community/wicg/">Web Platform Incubator Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
 A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
-   <p>This specification defines a well-known URL that sites can use
-
- to make their change password forms discoverable by tools. This simple
- affordance provides a way for software to help the user find the way to
- change their password.</p>
+   <p>Defines a method for detecting the reliability of an HTTP server’s response status codes.</p>
   </div>
   <div data-fill-with="at-risk"></div>
   <h2 class="no-num no-toc no-ref heading settled" id="status"><span class="content">Status of this document</span></h2>
@@ -1454,13 +1449,13 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
   <nav data-fill-with="table-of-contents" id="toc">
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
    <ol class="toc" role="directory">
-    <li><a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
-    <li><a href="#infra"><span class="secno">2</span> <span class="content">Infrastructure</span></a>
-    <li><a href="#semantics"><span class="secno">3</span> <span class="content">Change Password URLs</span></a>
+    <li><a href="#intro"><span class="secno"></span> <span class="content">Introduction</span></a>
+    <li><a href="#infra"><span class="secno">1</span> <span class="content">Infrastructure</span></a>
+    <li><a href="#semantics"><span class="secno">2</span> <span class="content">Detecting the reliability of HTTP status codes</span></a>
     <li>
-     <a href="#iana"><span class="secno">4</span> <span class="content">IANA considerations</span></a>
+     <a href="#iana"><span class="secno">3</span> <span class="content">IANA considerations</span></a>
      <ol class="toc">
-      <li><a href="#the-change-password-well-known-uri"><span class="secno">4.1</span> <span class="content">The <code>change-password</code> well-known URI</span></a>
+      <li><a href="#the-resource-that-should-not-exist-whose-status-code-should-not-be-200-well-known-uri"><span class="secno">3.1</span> <span class="content">The <code>resource-that-should-not-exist-whose-status-code-should-not-be-200</code> well-known URI</span></a>
      </ol>
     <li><a href="#acknowedgements"><span class="secno"></span> <span class="content">Acknowledgements</span></a>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
@@ -1474,92 +1469,68 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
      <ol class="toc">
       <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
-      <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
      </ol>
-    <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
    </ol>
   </nav>
   <main>
    <div class="non-normative">
-    <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
+    <h2 class="no-num heading settled" id="intro"><span class="content">Introduction</span></h2>
     <p><em>This section is non-normative.</em></p>
-    <p>Client-side password management software helps improve both the security and usability of websites which require authentication. It improves security by reducing cross-site password reuse, and enhances usability by providing autofill functionality.</p>
-    <p>Sites currently lack a way to programmatically advertise where a user <span class="allow-2119">can</span> change their password. By proposing a well-known URL for changing passwords, this specification enables password managers to help users change their passwords on sites which support it.</p>
+    <p>A number of specifications define <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8615#section-3" id="ref-for-section-3">well-known URIs</a>. <a data-link-type="biblio" href="#biblio-well-known">[WELL-KNOWN]</a></p>
+    <p>Clients attempting to detect the presence of <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc8615#section-3" id="ref-for-section-3①">well-known URIs</a> sometimes encounter misconfigured HTTP servers which respond with a 2xx <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-status" id="ref-for-concept-response-status">status</a> when the resource actually doesn’t exist.</p>
+    <p>This specification defines a method for discovering if an HTTP server is misconfigured in this way.</p>
    </div>
-   <h2 class="heading settled" data-level="2" id="infra"><span class="secno">2. </span><span class="content">Infrastructure</span><a class="self-link" href="#infra"></a></h2>
+   <h2 class="heading settled" data-level="1" id="infra"><span class="secno">1. </span><span class="content">Infrastructure</span><a class="self-link" href="#infra"></a></h2>
    <p>This specification depends on the Infra Standard. <a data-link-type="biblio" href="#biblio-infra">[INFRA]</a></p>
-   <p>This specification uses terminology from the
-Fetch,
-HTML,
-HTTP, and
-URL standards. <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a> <a data-link-type="biblio" href="#biblio-html">[HTML]</a> <a data-link-type="biblio" href="#biblio-http-semantics">[HTTP-SEMANTICS]</a> <a data-link-type="biblio" href="#biblio-url">[URL]</a></p>
-   <h2 class="heading settled" data-level="3" id="semantics"><span class="secno">3. </span><span class="content">Change Password URLs</span><a class="self-link" href="#semantics"></a></h2>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="change-password-url">change password url</dfn> of an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#concept-url-origin" id="ref-for-concept-url-origin">origin</a> is a URL that points to a resource that clients can use to discover where a user should go to update their password on <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#concept-url-origin" id="ref-for-concept-url-origin①">origin</a>.</p>
-   <p>Given an <var>origin</var>, clients <dfn data-dfn-type="dfn" data-export id="generate-a-change-password-url">generate a change password url<a class="self-link" href="#generate-a-change-password-url"></a></dfn> by running these steps:</p>
+   <h2 class="heading settled" data-level="2" id="semantics"><span class="secno">2. </span><span class="content">Detecting the reliability of HTTP status codes</span><a class="self-link" href="#semantics"></a></h2>
+   <p>We can see if a web server’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-status" id="ref-for-concept-response-status①">statuses</a> are reliable by <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-fetch" id="ref-for-concept-fetch">fetching</a> a URL that should never result in an <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#ok-status" id="ref-for-ok-status">ok status</a>. If the response status (after following redirects) is an <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#ok-status" id="ref-for-ok-status①">ok status</a>, it’s safe to conclude that the server is not configured properly.</p>
+   <p>To <dfn data-dfn-type="dfn" data-export id="test-the-reliability-of-an-origins-response-status-codes">test the reliability of an origin’s response status codes<a class="self-link" href="#test-the-reliability-of-an-origins-response-status-codes"></a></dfn> given <var>origin</var>, run the following steps:</p>
    <ol>
     <li data-md>
-     <p>If <var>origin</var> is not a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin">potentially trustworthy origin</a>, return failure.</p>
+     <p>Let <var>p</var> be <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-new-promise" id="ref-for-a-new-promise">a new promise</a>.</p>
     <li data-md>
-     <p class="assertion">Assert: <var>origin</var> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-tuple" id="ref-for-concept-origin-tuple">tuple origin</a>.</p>
+     <p>If <var>origin</var> is not a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-tuple" id="ref-for-concept-origin-tuple">tuple origin</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject">reject</a> <var>p</var> and return it.</p>
     <li data-md>
-     <p>Let <var>url</var> be a new <code class="idl"><a data-link-type="idl" href="https://url.spec.whatwg.org/#url" id="ref-for-url">URL</a></code> with values set as follows:</p>
-     <dl>
-      <dt data-md><a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a>
-      <dd data-md>
-       <p><var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme" id="ref-for-concept-origin-scheme">scheme</a></p>
-      <dt data-md><a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-host" id="ref-for-concept-url-host">host</a>
-      <dd data-md>
-       <p><var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host">host</a></p>
-      <dt data-md><a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-port" id="ref-for-concept-url-port">port</a>
-      <dd data-md>
-       <p><var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-port" id="ref-for-concept-origin-port">port</a></p>
-      <dt data-md><a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-path" id="ref-for-concept-url-path">path</a>
-      <dd data-md>
-       <p>« ".well-known", "change-password" ».</p>
-     </dl>
+     <p>Let <var>status reliability queue</var> be the result of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#starting-a-new-parallel-queue" id="ref-for-starting-a-new-parallel-queue">starting a new parallel queue</a>.</p>
     <li data-md>
-     <p>Return <var>url</var>.</p>
+     <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#enqueue-the-following-steps" id="ref-for-enqueue-the-following-steps">Enqueue the following steps</a> to <var>status reliability queue</var>:</p>
+     <ol>
+      <li data-md>
+       <p>Let <var>url</var> be the result of calling <code class="idl"><a data-link-type="idl" href="https://url.spec.whatwg.org/#dom-url-url" id="ref-for-dom-url-url">URL(url, base)</a></code> with url "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200" and base <var>origin</var>.</p>
+      <li data-md>
+       <p>Let <var>request</var> be a new <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request">request</a> whose <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url">url</a> is <var>url</var>, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-method" id="ref-for-concept-request-method">method</a> is <code>GET</code>, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#synchronous-flag" id="ref-for-synchronous-flag">synchronous flag</a> is set, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin">origin</a> is <var>origin</var>, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-mode" id="ref-for-concept-request-mode">mode</a> is <code>"same-origin"</code>, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#request-service-workers-mode" id="ref-for-request-service-workers-mode">service-workers mode</a> is <code>"none"</code>, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-credentials-mode" id="ref-for-concept-request-credentials-mode">credentials mode</a> is <code>"omit"</code>, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-cache-mode" id="ref-for-concept-request-cache-mode">cache mode</a> is <code>"no-store"</code>, and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-redirect-mode" id="ref-for-concept-request-redirect-mode">redirect mode</a> is <code>"follow"</code>.</p>
+      <li data-md>
+       <p>Let <var>response</var> be the result of performing a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-fetch" id="ref-for-concept-fetch①">fetch</a> using <var>request</var>.</p>
+      <li data-md>
+       <p>If <var>response</var> is a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-network-error" id="ref-for-concept-network-error">network error</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject①">reject</a> <var>p</var>.</p>
+      <li data-md>
+       <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-status" id="ref-for-concept-response-status②">status</a> is an <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#ok-status" id="ref-for-ok-status②">ok status</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject②">reject</a> <var>p</var>. Otherwise, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve">resolve</a> <var>p</var>.</p>
+     </ol>
+    <li data-md>
+     <p>Return <var>p</var>.</p>
    </ol>
-   <p class="example" id="example-d279f661"><a class="self-link" href="#example-d279f661"></a>The change password url for origin <code>"https://example.com/"</code> is <code>"https://example.com/.well-known/change-password"</code>. </p>
-   <p>Servers should redirect HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request">requests</a> for an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#concept-url-origin" id="ref-for-concept-url-origin②">origin’s</a> <a data-link-type="dfn" href="#change-password-url" id="ref-for-change-password-url">change password url</a> to the actual page on which users may change their password by returning a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response">response</a> with a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#redirect-status" id="ref-for-redirect-status">redirect status</a> of 302, 303, or 307, and a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7231#section-7.1.2" id="ref-for-section-7.1.2">Location</a> header. <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a> <a data-link-type="biblio" href="#biblio-http-semantics">[HTTP-SEMANTICS]</a> Clients must handle such redirects when requesting a <a data-link-type="dfn" href="#change-password-url" id="ref-for-change-password-url①">change password url</a>.</p>
-   <p class="note" role="note"><span>Note:</span> The above paragraph restricts servers to using temporary redirect codes.
-See <a href="https://github.com/WICG/change-password-url/issues/13">Issue 13</a>.</p>
-   <p>If necessary, servers may respond with an HTML document containing an <code><a data-link-type="element-sub" href="https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv" id="ref-for-attr-meta-http-equiv">http-equiv</a></code> pragma directive in the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv-refresh" id="ref-for-attr-meta-http-equiv-refresh">refresh state</a>. <a data-link-type="biblio" href="#biblio-html">[HTML]</a> Clients should handle such redirects when requesting a <a data-link-type="dfn" href="#change-password-url" id="ref-for-change-password-url②">change password url</a>.</p>
-   <p>Servers must not locate the actual change password page at the <a data-link-type="dfn" href="#change-password-url" id="ref-for-change-password-url③">change password url</a>, per <a href="https://tools.ietf.org/html/rfc8615#section-1.1">RFC8615 §1.1 Appropriate Use of Well-Known URIs</a>. Clients must handle <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#ok-status" id="ref-for-ok-status">ok status</a> responses when requesting a <a data-link-type="dfn" href="#change-password-url" id="ref-for-change-password-url④">change password url</a>.</p>
-   <p class="note" role="note"><span>Note:</span> Implementations might want to use <a data-link-type="abstract-op" href="https://www.unicode.org/reports/tr46/#ToUnicode" id="ref-for-ToUnicode">ToUnicode</a> when displaying <a data-link-type="dfn" href="#change-password-url" id="ref-for-change-password-url⑤">change password url</a>s. <a data-link-type="biblio" href="#biblio-idna">[IDNA]</a></p>
-   <p class="issue" id="issue-99dd61ed"><a class="self-link" href="#issue-99dd61ed"></a> Make use of <a data-link-type="dfn" href="https://wicg.github.io/change-password-url/response-code-reliability.html#test-the-reliability-of-an-origins-response-status-codes" id="ref-for-test-the-reliability-of-an-origins-response-status-codes">test the reliability of an origin’s response status codes</a> from <a data-link-type="biblio" href="#biblio-response-code-reliability">[RESPONSE-CODE-RELIABILITY]</a>.</p>
-   <h2 class="heading settled" data-level="4" id="iana"><span class="secno">4. </span><span class="content">IANA considerations</span><a class="self-link" href="#iana"></a></h2>
-   <h3 class="heading settled" data-level="4.1" id="the-change-password-well-known-uri"><span class="secno">4.1. </span><span class="content">The <code>change-password</code> well-known URI</span><a class="self-link" href="#the-change-password-well-known-uri"></a></h3>
-   <p>This document defines the “<code>.well-known</code>” URI <code>change-password</code>.
+   <h2 class="heading settled" data-level="3" id="iana"><span class="secno">3. </span><span class="content">IANA considerations</span><a class="self-link" href="#iana"></a></h2>
+   <h3 class="heading settled" data-level="3.1" id="the-resource-that-should-not-exist-whose-status-code-should-not-be-200-well-known-uri"><span class="secno">3.1. </span><span class="content">The <code>resource-that-should-not-exist-whose-status-code-should-not-be-200</code> well-known URI</span><a class="self-link" href="#the-resource-that-should-not-exist-whose-status-code-should-not-be-200-well-known-uri"></a></h3>
+   <p>This document defines the “<code>.well-known</code>” URI <code>resource-that-should-not-exist-whose-status-code-should-not-be-200</code>.
 This registration will be submitted to the IESG for review, approval, and registration with IANA using the template defined in <a data-link-type="biblio" href="#biblio-well-known">[WELL-KNOWN]</a> as follows:</p>
    <dl>
     <dt data-md>URI suffix
     <dd data-md>
-     <p>change-password</p>
+     <p><code>resource-that-should-not-exist-whose-status-code-should-not-be-200</code></p>
     <dt data-md>Change controller
     <dd data-md>
      <p>W3C</p>
     <dt data-md>Specification document(s)
     <dd data-md>
-     <p>This document is the relevant specification. (See <a href="#semantics">§ 3 Change Password URLs</a>)</p>
+     <p>This document is the relevant specification. (See <a href="#semantics">§ 2 Detecting the reliability of HTTP status codes</a>)</p>
     <dt data-md>Related information:
     <dd data-md>
      <p>None.</p>
    </dl>
    <h2 class="no-num heading settled" id="acknowedgements"><span class="content">Acknowledgements</span><a class="self-link" href="#acknowedgements"></a></h2>
-   <p>Thanks to
-Anne van Kesteren,
-Cl1608Ho,
-Dan Bernstein,
-David Singer,
-Dean Jackson,
-Florian Rivoal,
-John Wilander,
-Maciej Stachowiak,
-Mark Nottingham,
-Mike West, and
-Ricky Mondello
-for their feedback on this proposal. All of its features are theirs and all of its bugs are mine.</p>
+   <p>Many thanks to
+Paul Knight
+for their valuable feedback on this proposal.</p>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -1710,127 +1681,139 @@ for their feedback on this proposal. All of its features are theirs and all of i
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#change-password-url">change password url</a><span>, in §3</span>
-   <li><a href="#generate-a-change-password-url">generate a change password url</a><span>, in §3</span>
+   <li><a href="#test-the-reliability-of-an-origins-response-status-codes">test the reliability of an origin’s response status codes</a><span>, in §2</span>
   </ul>
+  <aside class="dfn-panel" data-for="term-for-concept-request-cache-mode">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-cache-mode">https://fetch.spec.whatwg.org/#concept-request-cache-mode</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-cache-mode">2. Detecting the reliability of HTTP status codes</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request-credentials-mode">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-credentials-mode">https://fetch.spec.whatwg.org/#concept-request-credentials-mode</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-credentials-mode">2. Detecting the reliability of HTTP status codes</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-fetch">
+   <a href="https://fetch.spec.whatwg.org/#concept-fetch">https://fetch.spec.whatwg.org/#concept-fetch</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-fetch">2. Detecting the reliability of HTTP status codes</a> <a href="#ref-for-concept-fetch①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request-method">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-method">https://fetch.spec.whatwg.org/#concept-request-method</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-method">2. Detecting the reliability of HTTP status codes</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request-mode">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-mode">https://fetch.spec.whatwg.org/#concept-request-mode</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-mode">2. Detecting the reliability of HTTP status codes</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-network-error">
+   <a href="https://fetch.spec.whatwg.org/#concept-network-error">https://fetch.spec.whatwg.org/#concept-network-error</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-network-error">2. Detecting the reliability of HTTP status codes</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-ok-status">
    <a href="https://fetch.spec.whatwg.org/#ok-status">https://fetch.spec.whatwg.org/#ok-status</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-ok-status">3. Change Password URLs</a>
+    <li><a href="#ref-for-ok-status">2. Detecting the reliability of HTTP status codes</a> <a href="#ref-for-ok-status①">(2)</a> <a href="#ref-for-ok-status②">(3)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-redirect-status">
-   <a href="https://fetch.spec.whatwg.org/#redirect-status">https://fetch.spec.whatwg.org/#redirect-status</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-concept-request-origin">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-origin">https://fetch.spec.whatwg.org/#concept-request-origin</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-redirect-status">3. Change Password URLs</a>
+    <li><a href="#ref-for-concept-request-origin">2. Detecting the reliability of HTTP status codes</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request-redirect-mode">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-redirect-mode">https://fetch.spec.whatwg.org/#concept-request-redirect-mode</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-redirect-mode">2. Detecting the reliability of HTTP status codes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request">
    <a href="https://fetch.spec.whatwg.org/#concept-request">https://fetch.spec.whatwg.org/#concept-request</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-request">3. Change Password URLs</a>
+    <li><a href="#ref-for-concept-request">2. Detecting the reliability of HTTP status codes</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-response">
-   <a href="https://fetch.spec.whatwg.org/#concept-response">https://fetch.spec.whatwg.org/#concept-response</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-request-service-workers-mode">
+   <a href="https://fetch.spec.whatwg.org/#request-service-workers-mode">https://fetch.spec.whatwg.org/#request-service-workers-mode</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-response">3. Change Password URLs</a>
+    <li><a href="#ref-for-request-service-workers-mode">2. Detecting the reliability of HTTP status codes</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-origin-host">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-concept-response-status">
+   <a href="https://fetch.spec.whatwg.org/#concept-response-status">https://fetch.spec.whatwg.org/#concept-response-status</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-origin-host">3. Change Password URLs</a>
+    <li><a href="#ref-for-concept-response-status">Introduction</a>
+    <li><a href="#ref-for-concept-response-status①">2. Detecting the reliability of HTTP status codes</a> <a href="#ref-for-concept-response-status②">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-attr-meta-http-equiv">
-   <a href="https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv">https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-synchronous-flag">
+   <a href="https://fetch.spec.whatwg.org/#synchronous-flag">https://fetch.spec.whatwg.org/#synchronous-flag</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-attr-meta-http-equiv">3. Change Password URLs</a>
+    <li><a href="#ref-for-synchronous-flag">2. Detecting the reliability of HTTP status codes</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-url-origin">
-   <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#concept-url-origin">https://html.spec.whatwg.org/multipage/infrastructure.html#concept-url-origin</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-concept-request-url">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-url">https://fetch.spec.whatwg.org/#concept-request-url</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-url-origin">3. Change Password URLs</a> <a href="#ref-for-concept-url-origin①">(2)</a> <a href="#ref-for-concept-url-origin②">(3)</a>
+    <li><a href="#ref-for-concept-request-url">2. Detecting the reliability of HTTP status codes</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-origin-port">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-port">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-port</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-enqueue-the-following-steps">
+   <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#enqueue-the-following-steps">https://html.spec.whatwg.org/multipage/infrastructure.html#enqueue-the-following-steps</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-origin-port">3. Change Password URLs</a>
+    <li><a href="#ref-for-enqueue-the-following-steps">2. Detecting the reliability of HTTP status codes</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-attr-meta-http-equiv-refresh">
-   <a href="https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv-refresh">https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv-refresh</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-starting-a-new-parallel-queue">
+   <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#starting-a-new-parallel-queue">https://html.spec.whatwg.org/multipage/infrastructure.html#starting-a-new-parallel-queue</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-attr-meta-http-equiv-refresh">3. Change Password URLs</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-origin-scheme">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-origin-scheme">3. Change Password URLs</a>
+    <li><a href="#ref-for-starting-a-new-parallel-queue">2. Detecting the reliability of HTTP status codes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-origin-tuple">
    <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-tuple">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-tuple</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-origin-tuple">3. Change Password URLs</a>
+    <li><a href="#ref-for-concept-origin-tuple">2. Detecting the reliability of HTTP status codes</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-section-7.1.2">
-   <a href="https://tools.ietf.org/html/rfc7231#section-7.1.2">https://tools.ietf.org/html/rfc7231#section-7.1.2</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-dom-url-url">
+   <a href="https://url.spec.whatwg.org/#dom-url-url">https://url.spec.whatwg.org/#dom-url-url</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-section-7.1.2">3. Change Password URLs</a>
+    <li><a href="#ref-for-dom-url-url">2. Detecting the reliability of HTTP status codes</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-ToUnicode">
-   <a href="https://www.unicode.org/reports/tr46/#ToUnicode">https://www.unicode.org/reports/tr46/#ToUnicode</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-a-new-promise">
+   <a href="https://heycam.github.io/webidl/#a-new-promise">https://heycam.github.io/webidl/#a-new-promise</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-ToUnicode">3. Change Password URLs</a>
+    <li><a href="#ref-for-a-new-promise">2. Detecting the reliability of HTTP status codes</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-test-the-reliability-of-an-origins-response-status-codes">
-   <a href="https://wicg.github.io/change-password-url/response-code-reliability.html#test-the-reliability-of-an-origins-response-status-codes">https://wicg.github.io/change-password-url/response-code-reliability.html#test-the-reliability-of-an-origins-response-status-codes</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-reject">
+   <a href="https://heycam.github.io/webidl/#reject">https://heycam.github.io/webidl/#reject</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-test-the-reliability-of-an-origins-response-status-codes">3. Change Password URLs</a>
+    <li><a href="#ref-for-reject">2. Detecting the reliability of HTTP status codes</a> <a href="#ref-for-reject①">(2)</a> <a href="#ref-for-reject②">(3)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-potentially-trustworthy-origin">
-   <a href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-origin">https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-origin</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-resolve">
+   <a href="https://heycam.github.io/webidl/#resolve">https://heycam.github.io/webidl/#resolve</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-potentially-trustworthy-origin">3. Change Password URLs</a>
+    <li><a href="#ref-for-resolve">2. Detecting the reliability of HTTP status codes</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-url">
-   <a href="https://url.spec.whatwg.org/#url">https://url.spec.whatwg.org/#url</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-section-3">
+   <a href="https://tools.ietf.org/html/rfc8615#section-3">https://tools.ietf.org/html/rfc8615#section-3</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-url">3. Change Password URLs</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-url-host">
-   <a href="https://url.spec.whatwg.org/#concept-url-host">https://url.spec.whatwg.org/#concept-url-host</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-url-host">3. Change Password URLs</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-url-path">
-   <a href="https://url.spec.whatwg.org/#concept-url-path">https://url.spec.whatwg.org/#concept-url-path</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-url-path">3. Change Password URLs</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-url-port">
-   <a href="https://url.spec.whatwg.org/#concept-url-port">https://url.spec.whatwg.org/#concept-url-port</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-url-port">3. Change Password URLs</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-url-scheme">
-   <a href="https://url.spec.whatwg.org/#concept-url-scheme">https://url.spec.whatwg.org/#concept-url-scheme</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-url-scheme">3. Change Password URLs</a>
+    <li><a href="#ref-for-section-3">Introduction</a> <a href="#ref-for-section-3①">(2)</a>
    </ul>
   </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
@@ -1838,50 +1821,44 @@ for their feedback on this proposal. All of its features are theirs and all of i
    <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
+     <li><span class="dfn-paneled" id="term-for-concept-request-cache-mode" style="color:initial">cache mode</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-credentials-mode" style="color:initial">credentials mode</span>
+     <li><span class="dfn-paneled" id="term-for-concept-fetch" style="color:initial">fetch</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-method" style="color:initial">method</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-mode" style="color:initial">mode</span>
+     <li><span class="dfn-paneled" id="term-for-concept-network-error" style="color:initial">network error</span>
      <li><span class="dfn-paneled" id="term-for-ok-status" style="color:initial">ok status</span>
-     <li><span class="dfn-paneled" id="term-for-redirect-status" style="color:initial">redirect status</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-origin" style="color:initial">origin</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-redirect-mode" style="color:initial">redirect mode</span>
      <li><span class="dfn-paneled" id="term-for-concept-request" style="color:initial">request</span>
-     <li><span class="dfn-paneled" id="term-for-concept-response" style="color:initial">response</span>
+     <li><span class="dfn-paneled" id="term-for-request-service-workers-mode" style="color:initial">service-workers mode</span>
+     <li><span class="dfn-paneled" id="term-for-concept-response-status" style="color:initial">status</span>
+     <li><span class="dfn-paneled" id="term-for-synchronous-flag" style="color:initial">synchronous flag</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-url" style="color:initial">url</span>
     </ul>
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-concept-origin-host" style="color:initial">host</span>
-     <li><span class="dfn-paneled" id="term-for-attr-meta-http-equiv" style="color:initial">http-equiv</span>
-     <li><span class="dfn-paneled" id="term-for-concept-url-origin" style="color:initial">origin</span>
-     <li><span class="dfn-paneled" id="term-for-concept-origin-port" style="color:initial">port</span>
-     <li><span class="dfn-paneled" id="term-for-attr-meta-http-equiv-refresh" style="color:initial">refresh state</span>
-     <li><span class="dfn-paneled" id="term-for-concept-origin-scheme" style="color:initial">scheme</span>
+     <li><span class="dfn-paneled" id="term-for-enqueue-the-following-steps" style="color:initial">enqueue the following steps</span>
+     <li><span class="dfn-paneled" id="term-for-starting-a-new-parallel-queue" style="color:initial">starting a new parallel queue</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin-tuple" style="color:initial">tuple origin</span>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[HTTP-SEMANTICS]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="term-for-section-7.1.2" style="color:initial">location</span>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[IDNA]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="term-for-ToUnicode" style="color:initial">ToUnicode</span>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[RESPONSE-CODE-RELIABILITY]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="term-for-test-the-reliability-of-an-origins-response-status-codes" style="color:initial">test the reliability of an origin's response status codes</span>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[secure-contexts]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="term-for-potentially-trustworthy-origin" style="color:initial">potentially trustworthy origin</span>
     </ul>
    <li>
     <a data-link-type="biblio">[URL]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-url" style="color:initial">URL</span>
-     <li><span class="dfn-paneled" id="term-for-concept-url-host" style="color:initial">host</span>
-     <li><span class="dfn-paneled" id="term-for-concept-url-path" style="color:initial">path</span>
-     <li><span class="dfn-paneled" id="term-for-concept-url-port" style="color:initial">port</span>
-     <li><span class="dfn-paneled" id="term-for-concept-url-scheme" style="color:initial">scheme</span>
+     <li><span class="dfn-paneled" id="term-for-dom-url-url" style="color:initial">URL(url, base)</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-a-new-promise" style="color:initial">a new promise</span>
+     <li><span class="dfn-paneled" id="term-for-reject" style="color:initial">reject</span>
+     <li><span class="dfn-paneled" id="term-for-resolve" style="color:initial">resolve</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[WELL-KNOWN]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-section-3" style="color:initial">well-known uri</span>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
@@ -1891,36 +1868,17 @@ for their feedback on this proposal. All of its features are theirs and all of i
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
-   <dt id="biblio-http-semantics">[HTTP-SEMANTICS]
-   <dd>R. Fielding, Ed.; J. Reschke, Ed.. <a href="https://httpwg.org/specs/rfc7231.html">Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a>. June 2014. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc7231.html">https://httpwg.org/specs/rfc7231.html</a>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
-   <dt id="biblio-response-code-reliability">[RESPONSE-CODE-RELIABILITY]
-   <dd>Ricky Mondello; Theresa O'Connor. <a href="https://wicg.github.io/change-password-url/response-code-reliability.html">Detecting the reliability of HTTP status codes</a>. CG-DRAFT. URL: <a href="https://wicg.github.io/change-password-url/response-code-reliability.html">https://wicg.github.io/change-password-url/response-code-reliability.html</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
-   <dt id="biblio-secure-contexts">[SECURE-CONTEXTS]
-   <dd>Mike West. <a href="https://www.w3.org/TR/secure-contexts/">Secure Contexts</a>. 15 September 2016. CR. URL: <a href="https://www.w3.org/TR/secure-contexts/">https://www.w3.org/TR/secure-contexts/</a>
    <dt id="biblio-url">[URL]
    <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
+   <dt id="biblio-webidl">[WebIDL]
+   <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/">Web IDL</a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
    <dt id="biblio-well-known">[WELL-KNOWN]
    <dd>M. Nottingham. <a href="https://tools.ietf.org/html/rfc8615">Well-Known Uniform Resource Identifiers (URIs)</a>. May 2019. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc8615">https://tools.ietf.org/html/rfc8615</a>
   </dl>
-  <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
-  <dl>
-   <dt id="biblio-idna">[IDNA]
-   <dd>Mark Davis; Michel Suignard. <a href="https://www.unicode.org/reports/tr46/tr46-25.html">Unicode IDNA Compatibility Processing</a>. 6 February 2020. Unicode Technical Standard #46. URL: <a href="https://www.unicode.org/reports/tr46/tr46-25.html">https://www.unicode.org/reports/tr46/tr46-25.html</a>
-  </dl>
-  <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
-  <div style="counter-reset:issue">
-   <div class="issue"> Make use of <a data-link-type="dfn" href="https://wicg.github.io/change-password-url/response-code-reliability.html#test-the-reliability-of-an-origins-response-status-codes">test the reliability of an origin’s response status codes</a> from <a data-link-type="biblio" href="#biblio-response-code-reliability">[RESPONSE-CODE-RELIABILITY]</a>.<a href="#issue-99dd61ed"> ↵ </a></div>
-  </div>
-  <aside class="dfn-panel" data-for="change-password-url">
-   <b><a href="#change-password-url">#change-password-url</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-change-password-url">3. Change Password URLs</a> <a href="#ref-for-change-password-url①">(2)</a> <a href="#ref-for-change-password-url②">(3)</a> <a href="#ref-for-change-password-url③">(4)</a> <a href="#ref-for-change-password-url④">(5)</a> <a href="#ref-for-change-password-url⑤">(6)</a>
-   </ul>
-  </aside>
 <script>/* script-dfn-panel */
 
 document.body.addEventListener("click", function(e) {

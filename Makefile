@@ -8,18 +8,23 @@
 #
 #     npm install -g doctoc
 
-.PHONY: all clean spec update-explainer-toc
+specs = $(patsubst %.bs,%.html,$(wildcard *.bs))
+
+.PHONY: all clean specs update-explainer-toc
 .SUFFIXES: .bs .html
 
-all: update-explainer-toc spec
+all: update-explainer-toc specs index.html
 
-update-explainer-toc:
+update-explainer-toc: Makefile
 	doctoc README.md --title "## Table of Contents" > /dev/null
 
-spec: index.html
+specs: $(specs) Makefile
+
+index.html: change-password-url.html
+	cp $< $@
 
 .bs.html:
 	bikeshed spec $< $@
 
 clean:
-	rm -f index.html *~
+	rm -f *.html *~
