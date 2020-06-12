@@ -9,6 +9,7 @@
   - [Why not allow sites to override this location with an HTTP Link header or an HTML `link` element?](#why-not-allow-sites-to-override-this-location-with-an-http-link-header-or-an-html-link-element)
   - [Why not serve a JSON resource with links to other account management functions?](#why-not-serve-a-json-resource-with-links-to-other-account-management-functions)
   - [What tools have implemented this feature?](#what-tools-have-implemented-this-feature)
+  - [What about servers whose HTTP response codes are unreliable?](#what-about-servers-whose-http-response-codes-are-unreliable)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
