@@ -83,5 +83,5 @@ This registration will be submitted to the IESG for review, approval, and regist
 <h2 id="acknowedgements" class="no-num">Acknowledgements</h2>
 
 Many thanks to
-Paul Knight
+Elaine Knight
 for their valuable feedback on this proposal.
