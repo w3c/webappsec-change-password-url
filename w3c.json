@@ -1,5 +1,6 @@
  {
-    "group":      [80485]
-,   "contacts":   ["hober", "marcoscaceres", "rmondello"]
-,   "repo-type":  "cg-report"
+    "group":      49309
+,   "contacts":   ["wseltzer", "weiler"]
+,   "policy":     "open"
+,   "repo-type":  "rec-track"
 }
