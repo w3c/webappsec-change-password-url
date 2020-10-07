@@ -80,9 +80,3 @@ This registration will be submitted to the IESG for review, approval, and regist
 
 : Related information:
 :: None.
-
-<h2 id="acknowedgements" class="no-num">Acknowledgements</h2>
-
-Many thanks to
-Elaine Knight
-for their valuable feedback on this proposal.
