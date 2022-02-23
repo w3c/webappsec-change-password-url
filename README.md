@@ -42,6 +42,7 @@ Specification complexity. If we determine we need other account management well-
 * iCloud Keychain on iOS 12
 * Safari 12
 * 1Password (1Password 8 and 1Password for Chrome, Firefox, Edge and macOS Safari)
+* Chrome 86
 
 ### What about servers whose HTTP response codes are unreliable?
 
