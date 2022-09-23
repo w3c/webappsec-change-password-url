@@ -1,19 +1,25 @@
 name: deploy
 
 on:
+  pull_request: {}
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  main:
+    name: Build, Validate, and Publish
+    runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
-    - run: pip install bikeshed
-    - run: bikeshed update
-    - run: make
-    - uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: build
+      - uses: actions/checkout@v2
+      - uses: w3c/spec-prod@v2
+        with:
+          SOURCE: change-password-url.bs
+          GH_PAGES_BRANCH: gh-pages
+          BUILD_FAIL_ON: nothing
+          VALIDATE_LINKS: false
+          VALIDATE_MARKUP: true
+          W3C_ECHIDNA_TOKEN: ${{ secrets.ECHIDNA_TOKEN }}
+          W3C_WG_DECISION_URL: https://lists.w3.org/Archives/Public/public-webappsec/2015Mar/0170.html
+          W3C_BUILD_OVERRIDE: |
+            shortname: change-password-url
+            status: w3c/FPWD
