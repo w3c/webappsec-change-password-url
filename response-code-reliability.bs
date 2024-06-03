@@ -56,7 +56,7 @@ To <dfn export>test the reliability of an origin's response status codes</dfn> g
 1. Let |status reliability queue| be the result of [=starting a new parallel queue=].
 1. [=Enqueue the following steps=] to |status reliability queue|:
     1. Let |url| be the result of calling {{URL(url, base)}} with url "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200" and base |origin|.
-    1. Let |request| be a new [=/request=] whose [=request/url=] is |url|, [=request/method=] is `GET`, [=request/synchronous flag=] is set, [=request/origin=] is |origin|, [=request/mode=] is `"same-origin"`, [=request/service-workers mode=] is `"none"`, [=request/credentials mode=] is `"omit"`, [=request/cache mode=] is `"no-store"`, and [=request/redirect mode=] is `"follow"`.
+    1. Let |request| be a new [=/request=] whose [=request/url=] is |url|, [=request/method=] is `GET`, [=request/origin=] is |origin|, [=request/mode=] is `"same-origin"`, [=request/service-workers mode=] is `"none"`, [=request/credentials mode=] is `"omit"`, [=request/cache mode=] is `"no-store"`, and [=request/redirect mode=] is `"follow"`.
     1. Let |response| be the result of performing a [=/fetch=] using |request|.
     1. If |response| is a [=network error=], [=reject=] |p|.
     1. If |response|'s [=response/status=] is an [=ok status=], [=reject=] |p|. Otherwise, [=/resolve=] |p|.
